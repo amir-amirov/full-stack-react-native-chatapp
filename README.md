@@ -1,79 +1,107 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# React Native Firebase Chat App
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+This is a **full-stack React Native chat application** that integrates with a web-based chat app through a shared **Firebase database**, allowing real-time communication between mobile and web platforms. The app is built using **React Native CLI**, **Redux Toolkit**, and **Firebase services** (Authentication, Firestore, and Storage) to provide a seamless, real-time chat experience with additional features such as image messaging, user profiles, and notifications.
 
-## Step 1: Start the Metro Server
+## Features
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+- **User Authentication**: Secure login/signup using Firebase Authentication.
+- **Real-time Messaging**: Chat functionality powered by Firestore with real-time updates using `onSnapshot`.
+- **Image Messaging**: Allows users to send images from their gallery using `react-native-image-crop-picker` and Firebase Storage for image uploads.
+- **Tab Navigation**: Easy-to-navigate interface using `react-navigation` with tabs for Profile and Chat.
+  - **Profile**: View and edit user profile.
+  - **Chat**: Displays a list of chats and a chatbox for active conversations.
+- **Notifications**: Notifications for user's actions using `react-native-simple-toast`.
+- **Redux Toolkit**: State management for handling user data, chat interactions, and messages.
+- **Real-time Message Status**: Messages are timestamped and feature a "like" option, with unread message status tracking.
+- **Iconography**: Icons from `react-native-vector-icons/Ionicons` to enhance the UI.
+- **TypeScript**: Ensures type safety throughout the application.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+## Key Libraries and Technologies
 
-```bash
-# using npm
-npm start
+- **Firebase**:  
+  - Authentication: For user signup/login.
+  - Firestore: Real-time database to store chat messages.
+  - Storage: For storing user-uploaded images.
+  
+- **Redux Toolkit**: Manages global state, including the current user, chat user, and chat messages.
+  
+- **React Navigation**: Manages navigation within the app, with stack and tab-based navigation for a clean user experience.
+  
+- **Image Crop Picker**: Used to pick and crop images from the user's gallery before sending them as messages.
+  
+- **React Native Vector Icons**: Provides a range of customizable icons to enhance the app's UI.
 
-# OR using Yarn
-yarn start
-```
+## Project Structure
 
-## Step 2: Start your Application
+The app is divided into different components:
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+- **Profile Screen**: Allows users to view and edit their profile. It includes stack navigation for moving between the profile overview and the edit profile page.
+  
+- **Chat Screen**: Displays a list of chats, allowing users to enter a chatbox to send messages. Each chat displays the last message and updates in real-time using `onSnapshot`.
+  
+- **ChatList Component**:  
 
-### For Android
+  - Shows chat list of users you are chatting with
+  - Allows users to find friends by username and start chatting
+  - Real-time chatlist updates sorted by the most recent
+  - In the chat list, each chat shows friend's avatar, name and last message
+  - If last message is unseen, it's highlighted and avatar is bordered
 
-```bash
-# using npm
-npm run android
+- **Chatbox Component**:  
+  - Handles message sending (both text and images) and updates chat status in real time.
+  - Shows interactive icons for messages with a "like" feature.
+  - Allows users to attach images from their gallery, which are uploaded to Firebase Storage and displayed in the chat.
+  - Real-time status updates for "seen" and "unseen" messages.
 
-# OR using Yarn
-yarn android
-```
+In the **ChatBox** component, we handle sending both text and image messages, update chat status in real-time, and allow users to like/unlike messages. 
 
-### For iOS
+Key features in `ChatBox`:
 
-```bash
-# using npm
-npm run ios
+1. **Real-time Message Updates**: Messages are fetched and updated in real-time from Firestore using `onSnapshot`. This ensures that all users in the chat receive new messages immediately.
 
-# OR using Yarn
-yarn ios
-```
+2. **Image Uploads**: Users can select images from their gallery, which are cropped and uploaded to Firebase Storage. The image URL is then sent as part of the chat message.
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+3. **Like/Unlike Messages**: Messages can be liked, with the status updated in Firestore and reflected in the UI.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
+## Firebase Firestore Database Design
+The NoSQL database is structured for scalability and efficient querying. It includes the following collections:
 
-Now that you have successfully run the app, let's modify it.
+1. **Users Collection**: Stores user profiles with fields such as `id`, `username`,`email`,`name`, `bio`, and `avatar`.
+2. **Chats Collection**: Each document identified by user id and contains chatsData array of chats for each user. chatsData is an array of objects. Each object has information about chat like the `messageId`, `rid` (receiver ID), `lastMessage`, and `updatedAt` timestamp.
+3. **Messages Collection**: Stores the chat messages for each conversation. Each document is identified by uniques `messageId` and contains messages which is an array of objects. Each object has information of a message: `sId` (sender ID), `text` (message content), and `createdAt` timestamp.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+## Installation and Setup
 
-## Congratulations! :tada:
+### Prerequisites
+- Node.js (v14 or later)
+- React Native CLI
+- Firebase Project
 
-You've successfully run and modified your React Native App. :partying_face:
+### Steps to Set Up the Project
 
-### Now what?
+1. Clone the repository:
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+   \`\`\`bash
+   git clone https://github.com/amir-amirov/full-stack-react-native-chatapp.git
+   cd full-stack-react-native-chatapp
+   \`\`\`
 
-# Troubleshooting
+2. Install dependencies:
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+   \`\`\`bash
+   npm install
+   \`\`\`
 
-# Learn More
+3. Run the app:
 
-To learn more about React Native, take a look at the following resources:
+   \`\`\`bash
+   npx react-native run-android
+   \`\`\`
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## Future Enhancements
+
+- **Push Notifications**: Integrate Firebase Cloud Messaging (FCM) for better real-time notifications.
+- **Message Reactions**: Add more reactions to messages besides "like".
