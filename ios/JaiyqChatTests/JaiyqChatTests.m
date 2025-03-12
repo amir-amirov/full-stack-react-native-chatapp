@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface ChatAppMobileTests : XCTestCase
+@interface JaiyqChatTests : XCTestCase
 
 @end
 
-@implementation ChatAppMobileTests
+@implementation JaiyqChatTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

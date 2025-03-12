@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:250490319518:android:8d36cbdce448ff6020018f",
+        "mobilesdk_app_id": "1:250490319518:android:73d633feb630701e20018f",
         "android_client_info": {
-          "package_name": "com.jaiyqchat"
+          "package_name": "com.chatappmobile"
         }
       },
       "oauth_client": [],

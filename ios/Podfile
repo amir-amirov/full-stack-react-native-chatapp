@@ -14,7 +14,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'ChatAppMobile' do
+target 'JaiyqChat' do
   config = use_native_modules!
   use_frameworks! :linkage => :static
   $RNFirebaseAsStaticFramework = true
@@ -24,7 +24,7 @@ target 'ChatAppMobile' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'ChatAppMobileTests' do
+  target 'JaiyqChatTests' do
     inherit! :complete
     # Pods for testing
   end
